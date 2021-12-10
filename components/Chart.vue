@@ -41,12 +41,10 @@ export default {
         dataLabel(newLabel){
             this.chart.data.datasets[0].label = newLabel;
             this.chart.update();
-            console.log(this.chart);
         },
         data(newData){
             this.chart.data.datasets[0].data = newData;
             this.chart.update();
-            console.log(this.chart);
         },
         labels(newLabels){
             this.chart.data.labels = newLabels;

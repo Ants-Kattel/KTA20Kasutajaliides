@@ -13,6 +13,7 @@ export const state = () => ({
         {name: 'New Deaths Desc', field: 'NewDeaths', order: 'desc'},
     ],
     sort: {name: 'Total Confirmed Desc', field: 'TotalConfirmed', order: 'desc'},
+    chartDates: {from: '', to: new Date().toISOString().substr(0, 10)},
 })
   
 export const mutations = {
@@ -37,12 +38,8 @@ export const actions = {
         });
     },
     getCountry(context, slug){
-        this.$axios.get('https://api.covid19api.com/country/' + slug, {
-            params: {
-                from: '2020-03-01',
-                to: '2020-04-01'
-            }
-        }).then(response => {
+        this.$axios.get('https://api.covid19api.com/country/' + slug)
+        .then(response => {
             context.commit('SET_COUNTRY', response.data);
         });
     }
@@ -69,7 +66,7 @@ export const getters = {
         });
     },
     labels(state){
-        return state.country.map(data => new Date(data.Date).toLocaleDateString());
+        return state.country.map(data => new Date(data.Date).toISOString().substr(0, 10));
     },
     confirmed(state){
         return state.country.map(data => data.Confirmed);
@@ -77,4 +74,7 @@ export const getters = {
     deaths(state){
         return state.country.map(data => data.Deaths);
     },
+    chartDates(state) {
+        return state.chartDates;
+    }
 }
